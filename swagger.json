@@ -1,0 +1,793 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "SmartNoise API",
+    "description": "## The Smart Noise APIs are now in private beta! Get started with this documentation.\n\n## Key Features\n\n- **Landing Management**: List your existing landing pages or create a new one. Please check out QUICKSTART.md for a heads up!\n\n- **Artist Management**: Retrieve artist data and add them to your account.\n\n## Contact Information\n\nFor more information about the SmartNoise API, please contact SmartNoise team at info@smart-noise.com.\n\n## License\n\nThe SmartNoise API Documentation is licensed under the CC BY-NC-ND 4.0 license. For more details, please see [here](https://creativecommons.org/licenses/by-nc-nd/4.0/).",
+    "version": "v0.1",
+    "contact": {
+      "name": "Team SmartNoise",
+      "email": "info@smart-noise.com"
+    },
+    "license": {
+      "name": "CC BY-NC-ND 4.0",
+      "url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+    }
+  },
+  "host": "api.smart-noise.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Enter the token with the `Bearer: ` prefix, e.g. 'Bearer abcde12345'.\n\nContact us to get a token.\n\nAll api calls must be made with this header."
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/smartnoise.Smartnoise/AddArtist": {
+      "post": {
+        "operationId": "Smartnoise_AddArtist",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/customerAddArtistResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/customerAddArtistRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Customer"
+        ]
+      }
+    },
+    "/smartnoise.Smartnoise/CreateLanding": {
+      "post": {
+        "summary": "Create Landing",
+        "description": "# CreateLanding Method\n\nThe `CreateLanding` method is used to create a new landing page.\n\n## Request Parameters\n\nThe request takes a `Landing` message, which includes several fields that specify the details of the landing page.\n\n## Response\n\nTrue if the landing page was created successfully, false otherwise.\n\n",
+        "operationId": "Smartnoise_CreateLanding",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/landingCreateLandingResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/landingCreateLandingRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Landings"
+        ],
+        "security": [
+          {
+            "APIAuthorization": []
+          }
+        ]
+      }
+    },
+    "/smartnoise.Smartnoise/GetArtistsByCustomer": {
+      "post": {
+        "summary": "Get Artist by Customer",
+        "description": "# GetArtistsByCustomer Method\n\nThe `GetArtistsByCustomer` method is used to retrieve the artists associated with a customer.\n\n## Request Parameters\n\nThe request takes a `Customer` message, which includes the ID of the customer.\n\n## Response\n\nThe response includes a list of `Artist` messages, which include the details of the artists associated with the customer.\n\n",
+        "operationId": "Smartnoise_GetArtistsByCustomer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/customerGetArtistsByCustomerResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/customerGetArtistsByCustomerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Artists"
+        ],
+        "security": [
+          {
+            "APIAuthorization": []
+          }
+        ]
+      }
+    },
+    "/smartnoise.Smartnoise/GetLandingsByUrl": {
+      "post": {
+        "summary": "Get Landings by URL",
+        "description": "# GetLandingsByUrl Method\n\n`GetLandingsByUrl` Retrieve landing pages based on their URLs. \n\n## Request Parameters\n\nThe request takes two parameters:\n\n- `userId`: A string that represents the unique identifier of the user. This is used to ensure that the user has the necessary permissions to retrieve the landing pages.\n\n- `urls`: A list of strings that represent the URLs of the landing pages to be retrieved. If given an empty array, returns all landing pages for the given user.\n\n## Response\n\nThe response includes two maps:\n\n- `landings`: A map where the keys are the URLs of the landing pages and the values are the landing pages themselves. This allows the user to easily find the landing page for a given URL.\n\n- `invalidLandings`: A map where the keys are the URLs of the landing pages that could not be retrieved and the values are the reasons why they could not be retrieved. This provides useful feedback to the user about any problems with the request.\n\n",
+        "operationId": "Smartnoise_GetLandingsByUrl",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/landingGetLandingsByUrlsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/landingGetLandingsByUrlsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Landings"
+        ],
+        "security": [
+          {
+            "APIAuthorization": []
+          }
+        ]
+      }
+    },
+    "/smartnoise.Smartnoise/SearchArtistByName": {
+      "post": {
+        "summary": "artist",
+        "operationId": "Smartnoise_SearchArtistByName",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/artistSearchArtistByNameResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/artistSearchArtistByNameRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Artists"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "artistSearchArtistByNameArtist": {
+      "type": "object",
+      "properties": {
+        "artistId": {
+          "type": "string"
+        },
+        "artistName": {
+          "type": "string"
+        },
+        "artistUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "artistSearchArtistByNameRequest": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "artistName": {
+          "type": "string"
+        }
+      }
+    },
+    "artistSearchArtistByNameResponse": {
+      "type": "object",
+      "properties": {
+        "artists": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/artistSearchArtistByNameArtist"
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/utilityError"
+          }
+        }
+      }
+    },
+    "customerAddArtistRequest": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "artistId": {
+          "type": "string"
+        }
+      }
+    },
+    "customerAddArtistResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/utilityError"
+          }
+        }
+      }
+    },
+    "customerArtist": {
+      "type": "object",
+      "properties": {
+        "artistId": {
+          "type": "string"
+        },
+        "artistName": {
+          "type": "string"
+        },
+        "artistUrl": {
+          "type": "string"
+        },
+        "followers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/customerFollower"
+          }
+        },
+        "genres": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "picture": {
+          "type": "string"
+        },
+        "popularity": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/customerPopularity"
+          }
+        }
+      }
+    },
+    "customerCustomer": {
+      "type": "object",
+      "properties": {
+        "artistInfoUpdatedAt": {
+          "type": "string"
+        },
+        "artists": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/customerArtist"
+          }
+        },
+        "cardStatus": {
+          "type": "string"
+        },
+        "company": {
+          "type": "string"
+        },
+        "domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "futureActivePlan": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "registrationComplete": {
+          "type": "boolean"
+        }
+      }
+    },
+    "customerFollower": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "customerGetArtistsByCustomerRequest": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
+    "customerGetArtistsByCustomerResponse": {
+      "type": "object",
+      "properties": {
+        "artists": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/customerArtist"
+          }
+        }
+      }
+    },
+    "customerPopularity": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "landingAdsReport": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "frequency": {
+          "$ref": "#/definitions/landingAdsReportFrequency"
+        },
+        "interval": {
+          "$ref": "#/definitions/landingAdsReportInterval"
+        },
+        "to": {
+          "type": "string"
+        },
+        "cc": {
+          "type": "string"
+        },
+        "lastRun": {
+          "type": "string"
+        }
+      }
+    },
+    "landingAdsReportFrequency": {
+      "type": "string",
+      "enum": [
+        "WEEKLY"
+      ],
+      "default": "WEEKLY"
+    },
+    "landingAdsReportInterval": {
+      "type": "string",
+      "enum": [
+        "TODAY",
+        "YESTERDAY",
+        "LAST_7_DAYS",
+        "LAST_30_DAYS",
+        "LAST_YEAR",
+        "LIFETIME"
+      ],
+      "default": "TODAY"
+    },
+    "landingCountry": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "dialCode": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "flag": {
+          "type": "string"
+        },
+        "preferred": {
+          "type": "boolean"
+        },
+        "secondary": {
+          "type": "boolean"
+        },
+        "areaCodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "countryCode": {
+          "type": "string"
+        }
+      }
+    },
+    "landingCreateLandingRequest": {
+      "type": "object",
+      "properties": {
+        "landing": {
+          "$ref": "#/definitions/landingLanding"
+        },
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
+    "landingCreateLandingResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        }
+      }
+    },
+    "landingGetLandingsByUrlsRequest": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "landingGetLandingsByUrlsResponse": {
+      "type": "object",
+      "properties": {
+        "landings": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/landingLanding"
+          }
+        },
+        "invalidLandings": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "landingLanding": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/landingLandingType"
+        },
+        "useCase": {
+          "$ref": "#/definitions/landingUseCase"
+        },
+        "sourceUrl": {
+          "type": "string"
+        },
+        "spotifyType": {
+          "type": "string"
+        },
+        "spotifyId": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "imageId": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "pageName": {
+          "type": "string"
+        },
+        "artistId": {
+          "type": "string"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/landingLandingService"
+          }
+        },
+        "dates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/landingLandingDate"
+          }
+        },
+        "pixelId": {
+          "type": "string"
+        },
+        "conversionToken": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "gaKey": {
+          "type": "string"
+        },
+        "customerId": {
+          "type": "string"
+        },
+        "createDate": {
+          "type": "string"
+        },
+        "fbUserId": {
+          "type": "string"
+        },
+        "fbAccountId": {
+          "type": "string"
+        },
+        "fbCampaignId": {
+          "type": "string"
+        },
+        "fbCampaignName": {
+          "type": "string"
+        },
+        "adReportsEnabled": {
+          "type": "boolean"
+        },
+        "adReports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/landingAdsReport"
+          }
+        },
+        "hidden": {
+          "type": "boolean"
+        },
+        "releaseDate": {
+          "type": "string"
+        },
+        "lastCheck": {
+          "type": "string"
+        },
+        "captureEmail": {
+          "type": "boolean"
+        },
+        "notifyFans": {
+          "type": "boolean"
+        },
+        "redirectAfter": {
+          "type": "boolean"
+        },
+        "redirectAfterUrl": {
+          "type": "string"
+        },
+        "addArtistToFollow": {
+          "type": "boolean"
+        },
+        "addToPlaylist": {
+          "type": "boolean"
+        },
+        "artistName": {
+          "type": "string"
+        },
+        "trackOrAlbumName": {
+          "type": "string"
+        },
+        "deleted": {
+          "type": "boolean"
+        },
+        "isPresave": {
+          "type": "boolean"
+        },
+        "disabled": {
+          "type": "boolean"
+        },
+        "appleMusicNotifyFans": {
+          "type": "boolean"
+        },
+        "navigationId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "landingLandingDate": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string"
+        },
+        "venue": {
+          "type": "string"
+        },
+        "country": {
+          "$ref": "#/definitions/landingCountry"
+        },
+        "city": {
+          "type": "string"
+        }
+      }
+    },
+    "landingLandingService": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "logo": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "button": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "order": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "landingLandingType": {
+      "type": "string",
+      "enum": [
+        "STANDARD",
+        "PRESAVE_CLASSIC",
+        "PRESAVE_LIFETIME",
+        "TICKETS"
+      ],
+      "default": "STANDARD"
+    },
+    "landingUseCase": {
+      "type": "string",
+      "enum": [
+        "ORGANIC",
+        "ADVERTISING"
+      ],
+      "default": "ORGANIC"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "utilityError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
